@@ -8,9 +8,9 @@ import { SESSION_FILE, loadCredentials } from './config.js';
 import { status, statusClear } from './helpers/spinner.js';
 
 export async function launchBrowser(): Promise<{ browser: Browser; page: Page; context: BrowserContext }> {
-  const browser = await chromium.launch({ headless: false, slowMo: 500 });
-  // const browser = await chromium.launch({ headless: true });
-  console.log("fs.existsSync(SESSION_FILE) ~~>", fs.existsSync(SESSION_FILE));
+  //const browser = await chromium.launch({ headless: false, slowMo: 500 });
+  const browser = await chromium.launch({ headless: true });  
+
   // Try restoring session
   /*
   if (fs.existsSync(SESSION_FILE)) {
@@ -20,10 +20,8 @@ export async function launchBrowser(): Promise<{ browser: Browser; page: Page; c
       storageState: SESSION_FILE,
     });
     const page = await context.newPage();
-    await page.goto(URL_BASE);
-    console.log("URL_BASE ~~>", URL_BASE);
-    await page.waitForLoadState('domcontentloaded');
-    console.log("includes('/login') ~~>", !page.url().includes('/login'));
+    await page.goto(URL_BASE);    
+    await page.waitForLoadState('domcontentloaded');    
     if (!page.url().includes('/login')) {
       statusClear();
       return { browser, page, context };
