@@ -74,7 +74,7 @@ export function registerTodayCommand(program: Command): void {
 
         tbody.children('tr').each((_, tr) => {
           const cols = $(tr).children('td');
-          if (cols.length < 5) return;
+          // if (cols.length < 5) return;
 
           const dateText = $(cols[0]).text().trim();
           const matchDate = parseMatchDate(dateText);
@@ -83,7 +83,9 @@ export function registerTodayCommand(program: Command): void {
           const home = $(cols[1]).text().trim();
           const away = $(cols[2]).text().trim();
 
-          const betTd = $(cols[3]);
+          const inputColIdx = cols.length - 2
+
+          const betTd = $(cols[inputColIdx]);
           let bet: string;
           if (betTd.hasClass('nichttippbar')) {
             bet = betTd.text().trim() || '-';

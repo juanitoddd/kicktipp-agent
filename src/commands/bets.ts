@@ -16,7 +16,7 @@ export function registerBetsCommand(program: Command): void {
         const community = await ensureCommunity(page);
         const matchday = opts.matchday !== undefined ? parseInt(opts.matchday) : undefined;
 
-        status('Loading bets...');
+        status('Loading bets...');        
         await page.goto(getPredictUrl(community, matchday));
         await page.waitForLoadState('domcontentloaded');
         await dismissConsent(page);
@@ -30,14 +30,14 @@ export function registerBetsCommand(program: Command): void {
         if (titleDiv.length) {
           console.log(titleDiv.text().trim());
         }
-        console.log();
+        // console.log();
 
         const tbody = content.find('tbody');
         if (!tbody.length) {
-          console.log('No matches found.');
+          console.log('No matches found..');
           return;
         }
-
+        
         const rowsData: [string, string, string, string, string][] = [];
         tbody.children('tr').each((_, tr) => {
           const cols = $(tr).children('td');
@@ -83,9 +83,9 @@ export function registerBetsCommand(program: Command): void {
               `  ${date.padEnd(17)} ${home.padStart(homeWidth)} vs ${away.padEnd(awayWidth)}  ${bet.padStart(5)}  ${odds}`,
             );
           }
-        }
+        }        
       } finally {
-        await browser.close();
+        // await browser.close();
       }
     });
 }

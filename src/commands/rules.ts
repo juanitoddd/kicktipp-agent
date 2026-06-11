@@ -15,7 +15,7 @@ export function registerRulesCommand(program: Command): void {
         const community = await ensureCommunity(page);
 
         status('Loading rules...');
-        await page.goto(`${URL_BASE}/${community}/rules`);
+        await page.goto(`${URL_BASE}/${community}/spielregeln`);
         await page.waitForLoadState('domcontentloaded');
         await dismissConsent(page);
         statusClear();

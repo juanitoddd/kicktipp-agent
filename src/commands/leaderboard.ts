@@ -94,7 +94,8 @@ function showRankings(
     const nameDiv = $(tr).find('div.mg_name');
     const mdTd = $(tr).find('td.spieltagspunkte');
     const bonusTd = $(tr).find('td.bonus');
-    const totalTd = $(tr).find('td.gesamtpunkte');
+    // const totalTd = $(tr).find('td.gesamtpunkte');
+    const totalTd = $(tr).find('td.punkte');
     if (posTd.length && nameDiv.length) {
       players.push([
         posTd.text().trim(),

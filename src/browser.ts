@@ -8,9 +8,11 @@ import { SESSION_FILE, loadCredentials } from './config.js';
 import { status, statusClear } from './helpers/spinner.js';
 
 export async function launchBrowser(): Promise<{ browser: Browser; page: Page; context: BrowserContext }> {
-  const browser = await chromium.launch({ headless: true });
-
+  const browser = await chromium.launch({ headless: false, slowMo: 500 });
+  // const browser = await chromium.launch({ headless: true });
+  console.log("fs.existsSync(SESSION_FILE) ~~>", fs.existsSync(SESSION_FILE));
   // Try restoring session
+  /*
   if (fs.existsSync(SESSION_FILE)) {
     status('Restoring session...');
     const context = await browser.newContext({
@@ -19,7 +21,9 @@ export async function launchBrowser(): Promise<{ browser: Browser; page: Page; c
     });
     const page = await context.newPage();
     await page.goto(URL_BASE);
+    console.log("URL_BASE ~~>", URL_BASE);
     await page.waitForLoadState('domcontentloaded');
+    console.log("includes('/login') ~~>", !page.url().includes('/login'));
     if (!page.url().includes('/login')) {
       statusClear();
       return { browser, page, context };
@@ -27,6 +31,7 @@ export async function launchBrowser(): Promise<{ browser: Browser; page: Page; c
     status('Session expired, logging in again...');
     await context.close();
   }
+  */
 
   // Fresh login
   const { email, password } = await loadCredentials();
@@ -43,7 +48,7 @@ export async function dismissConsent(page: Page): Promise<void> {
   try {
     await page.waitForSelector('iframe[src*="privacy-mgmt"]', { timeout: 2000 });
     for (const frame of page.frames()) {
-      const btn = await frame.$('button:has-text("Accept and continue")');
+      const btn = await frame.$('button:has-text("Akzeptieren und weiter")');
       if (btn) {
         await btn.click();
         await page.waitForSelector('iframe[src*="privacy-mgmt"]', { state: 'hidden', timeout: 3000 });

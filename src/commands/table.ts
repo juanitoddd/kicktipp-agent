@@ -17,7 +17,7 @@ export function registerTableCommand(program: Command): void {
         const community = await ensureCommunity(page);
 
         status('Loading table...');
-        let url = `${URL_BASE}/${community}/tables`;
+        let url = `${URL_BASE}/${community}/tabellen`;
         let option: string | null = null;
         if (opts.home) {
           option = 'heim';

@@ -10,6 +10,7 @@ export const ask = (question: string): Promise<string> => {
 
 export async function ensureCommunity(page: Page): Promise<string> {
   let community = loadCommunity();
+  console.log("Loaded community ~~>", community);
   if (!community) {
     const all = await getCommunities(page);
     if (!all.length) { console.error('No communities found.'); process.exit(1); }

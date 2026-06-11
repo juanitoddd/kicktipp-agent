@@ -33,7 +33,7 @@ export function registerOverviewCommand(program: Command): void {
         const community = await ensureCommunity(page);
 
         status('Loading overview...');
-        const url = `${URL_BASE}/${community}/overview?ansicht=${ansicht}`;
+        const url = `${URL_BASE}/${community}/gesamtuebersicht?ansicht=${ansicht}`;
         await page.goto(url);
         await page.waitForLoadState('domcontentloaded');
         await dismissConsent(page);
@@ -127,7 +127,7 @@ export function registerOverviewCommand(program: Command): void {
           console.log(line);
         }
       } finally {
-        await browser.close();
+        // await browser.close();
       }
     });
 }

@@ -16,7 +16,7 @@ export function registerScheduleCommand(program: Command): void {
         const community = await ensureCommunity(page);
 
         status('Loading schedule...');
-        let url = `${URL_BASE}/${community}/schedule`;
+        let url = `${URL_BASE}/${community}/tippspielplan`;
         if (opts.matchday !== undefined) {
           const matchday = parseInt(opts.matchday);
           if (matchday < 1 || matchday > 34) {
@@ -55,9 +55,9 @@ export function registerScheduleCommand(program: Command): void {
           const date = $(cols[0]).text().trim();
           const home = $(cols[2]).text().trim();
           const away = $(cols[3]).text().trim();
-          const resultSpan = $(cols[4]).find('span.kicktipp-ergebnis');
+          const resultSpan = $(cols[5]).find('span.kicktipp-ergebnis');
           let result: string;
-          if (resultSpan.length) {
+          if (resultSpan.length) {            
             const h = resultSpan.find('span.kicktipp-heim').text().trim();
             const g = resultSpan.find('span.kicktipp-gast').text().trim();
             result = `${h}:${g}`;

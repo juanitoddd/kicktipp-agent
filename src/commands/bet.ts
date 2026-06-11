@@ -144,14 +144,15 @@ async function interactiveMatchBets(page: any, community: string, matchday?: num
     gastName: string;
   }
   const editable: EditableRow[] = [];
-
+  console.log('Parsing matches...', tbody);
   tbody.find('tr').each((_, tr) => {
     const cols = $(tr).find('td');
-    if (cols.length < 5) return;
-    const betTd = $(cols[3]);
+    const inputColIdx = cols.length - 2
+    // if (cols.length < 5) return;
+    const betTd = $(cols[inputColIdx]);    
     if (betTd.hasClass('nichttippbar')) return;
     const heimInput = betTd.find('input[id$="_heimTipp"]');
-    const gastInput = betTd.find('input[id$="_gastTipp"]');
+    const gastInput = betTd.find('input[id$="_gastTipp"]');    
     if (!heimInput.length || !gastInput.length) return;
     const date = $(cols[0]).text().trim();
     const home = $(cols[1]).text().trim();
@@ -168,13 +169,13 @@ async function interactiveMatchBets(page: any, community: string, matchday?: num
       heimName: heimInput.attr('name')!,
       gastName: gastInput.attr('name')!,
     });
-  });
+  });  
 
   if (!editable.length) {
-    console.log('No editable matches found.');
+    console.log('No editable matches found.1');
     return;
   }
-
+  
   let changed = false;
   for (const row of editable) {
     let prompt = `  ${row.date} ${row.home} vs ${row.away} `;
@@ -208,7 +209,7 @@ async function interactiveMatchBets(page: any, community: string, matchday?: num
     console.log('\nBets saved.');
   } else {
     console.log('\nNo changes made.');
-  }
+  }  
 }
 
 async function fixtureBets(page: any, community: string, bets: string[], matchday?: number): Promise<void> {
@@ -243,7 +244,7 @@ async function fixtureBets(page: any, community: string, bets: string[], matchda
   });
 
   if (!editable.length) {
-    console.log('No editable matches found.');
+    console.log('No editable matches found.2');
     return;
   }
 
@@ -388,7 +389,7 @@ async function bonusBetsInteractive(
 
 async function bonusBets(page: any, community: string, bets: string[]): Promise<void> {
   status('Loading bonus questions...');
-  await page.goto(`${URL_BASE}/${encodeURIComponent(community)}/predict?bonus=true`);
+  await page.goto(`${URL_BASE}/${encodeURIComponent(community)}/tippabgabe?bonus=true`);
   await page.waitForLoadState('domcontentloaded');
   await dismissConsent(page);
   statusClear();
